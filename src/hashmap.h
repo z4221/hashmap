@@ -33,7 +33,7 @@
 /* data types */
 typedef struct {
     char *Key;
-    char *Data;
+    void *Data;
 } HashItem;
 
 typedef struct {
