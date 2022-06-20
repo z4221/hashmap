@@ -78,7 +78,7 @@ HashItem *GetHashmapItem(char *key, Hashmap *hashmap) {
                 if (destinationKey) {
                     if (strcmp(key,destinationKey) == 0) {
                         return &hashmap->Items[hash];
-                    } 
+                    }
                 } else {
                     return &hashmap->Items[hash];
                 }
