@@ -18,6 +18,7 @@ typedef struct {
 
 /* semi internal functions */
 size_t    HashmapHashData(char *key, size_t size);
+size_t    DoubleHashData(size_t data, size_t size);
 HashItem *GetHashmapItem(char *key, Hashmap *hashmap);
 
 /* external functions */
