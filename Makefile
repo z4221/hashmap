@@ -18,7 +18,7 @@ libhashmap.so:
 	${CC} ${CFLAGS} -shared src/hashmap.c -o bin/libhashmap.so
 
 clean:
-	rm bin/*
+	rm -f bin/*
 
 test: clean make test.c
 	LD_LIBRARY_PATH=./bin ./bin/test
