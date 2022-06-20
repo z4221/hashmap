@@ -5,6 +5,7 @@ CFLAGS := -O3
 make: hashmap.h hashmap.o libhashmap.a libhashmap.so
 
 hashmap.h:
+	mkdir -p ./bin
 	cp src/hashmap.h bin/hashmap.h
 
 hashmap.o:
