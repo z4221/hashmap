@@ -62,6 +62,14 @@ size_t HashmapHashData(char *key, size_t size) {
     return hash;
 }
 
+size_t DoubleHashData(size_t data, size_t size) {
+    size_t hash = 0;
+    hash += data * 4221;
+    hash += hash * data;
+    hash %= size;
+    return hash;
+}
+
 /* function for getting item from hashmap */
 HashItem *GetHashmapItem(char *key, Hashmap *hashmap) {
     size_t hash = HashmapHashData(key,hashmap->Size);
@@ -71,19 +79,29 @@ HashItem *GetHashmapItem(char *key, Hashmap *hashmap) {
         if (strcmp(key,destinationKey) == 0) {
             return &hashmap->Items[hash];
         } else {
-            size_t oldHash = hash;
-            while (1) {
-                hash = hash + 1;
-                destinationKey = hashmap->Items[hash].Key;
-                if (destinationKey) {
-                    if (strcmp(key,destinationKey) == 0) {
-                        return &hashmap->Items[hash];
-                    }
-                } else {
+            hash = DoubleHashData(hash,hashmap->Size);
+            destinationKey = hashmap->Items[hash].Key;
+            if (destinationKey) {
+                if (strcmp(key,destinationKey) == 0) {
                     return &hashmap->Items[hash];
+                } else {
+                    size_t oldHash = hash;
+                    while (1) {
+                        hash = hash + 1;
+                        destinationKey = hashmap->Items[hash].Key;
+                        if (destinationKey) {
+                            if (strcmp(key,destinationKey) == 0) {
+                                return &hashmap->Items[hash];
+                            }
+                        } else {
+                            return &hashmap->Items[hash];
+                        }
+                        if (hash == oldHash)
+                            return NULL;
+                    }
                 }
-                if (hash == oldHash)
-                    return NULL;
+            } else {
+                return &hashmap->Items[hash];
             }
         }
     } else {
